@@ -2,7 +2,20 @@
 ### (D.A.H.A. Protokolü - Doğal Aritmetik Haritalama Algoritması)
 
 **Version:** 1.0.0 (Concept / Experimental)  
-**License:** MIT License  
+
+## 👨‍💻 Author / Yazar
+
+**[Furkan AKÇA]** *Creator & Lead Researcher* Project Started: December 2025
+
+**Collaborator:** Gemini AI (Concept Validation & Documentation)
+
+## 📄 License
+
+This project is licensed under the MIT License.
+Copyright (c) 2025 [Furkan AKÇA].
+
+**Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
+
 
 ---
 
@@ -132,16 +145,3 @@ Sistem güvenliği birbirinden bağımsız 3 parametreye dayanır. Diskteki `MAP
 * **Devlet Düzeyinde Gizlilik:** Anahtarların fiziksel olarak ayrı yerlerde tutulması gereken senaryolar.
 
 ---
-
-## 👨‍💻 Author / Yazar
-
-**[Furkan AKÇA]** *Creator & Lead Researcher* Project Started: December 2025
-
-**Collaborator:** Gemini AI (Concept Validation & Documentation)
-
-## 📄 License
-
-This project is licensed under the MIT License.
-Copyright (c) 2025 [Furkan AKÇA].
-
-**Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
