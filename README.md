@@ -15,8 +15,6 @@ This project is licensed under the MIT License.
 Copyright (c) 2025 [Furkan AKÇA].
 
 **Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
-
-## 🧠 Logic Diagram (Mantık Şeması)
     
 ---
 
