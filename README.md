@@ -71,7 +71,7 @@ The security relies on three independent parameters. The stored `MAP` file on th
 
 ### 4. Security & Trade-offs
 * **Impossibility of Brute-Force:** An attacker must guess the Header, the Salt, and the exact Depth simultaneously. Since the file has no header, there is no way to verify if a guess is correct.
-* **Data Expansion:** The `MAP` file stores addresses of bits rather than bits themselves. The file size will increase significantly (estimated 3x - 10x).
+* **Data Expansion:** By utilizing Delta Encoding (storing the relative distance between bits instead of absolute addresses), the storage overhead is significantly optimized. The estimated file size expansion is reduced to 1.5x - 4x.
 * **Performance:** Requires BigInt arithmetic, making it slower than hardware-accelerated AES.
 
 ### 5. Use Cases
@@ -135,7 +135,7 @@ Sistem güvenliği birbirinden bağımsız 3 parametreye dayanır. Diskteki `MAP
 
 ### 4. Güvenlik ve Kısıtlar
 * **Brute-Force İmkansızlığı:** Saldırgan Header, Salt ve Depth değerlerini aynı anda doğru tahmin etmek zorundadır. Header olmadığı için tahminin doğruluğunu test edemez.
-* **Veri Genişlemesi:** `MAP` dosyası bitlerin kendisini değil adreslerini tuttuğu için dosya boyutu artar (Tahmini 3x - 10x).
+* **Veri Genişlemesi:** `MAP` dosyası mutlak adresler yerine bitler arasındaki mesafeyi (Fark/Delta) tutarak optimize edilmiştir. Tahmini dosya boyutu artışı 1.5x - 4x seviyesine indirilmiştir.
 * **Performans:** Büyük sayı (BigInt) aritmetiği gerektirdiği için donanım tabanlı şifrelemelerden daha yavaştır.
 
 ### 5. Kullanım Alanları
