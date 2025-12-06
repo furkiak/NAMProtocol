@@ -17,22 +17,6 @@ Copyright (c) 2025 [Furkan AKÇA].
 **Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
 
 ## 🧠 Logic Diagram (Mantık Şeması)
-
-```mermaid
-graph TD
-    A[Original File] -->|Step 1: Strip Header| B(Body Only)
-    A -->|Key 1| C[🔑 Header Key]
-    B -->|Step 2: Add Salt| D{Salted Body}
-    D -->|Step 3: Arithmetic Mapping| E[Processing...]
-    E -->|Output 1| F[🗺️ MAP File]
-    E -->|Output 2| G[📏 Depth Key]
-    D -.->|Key 2| H[🧂 Salt Key]
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:4px
-    style C fill:#ff9,stroke:#333
-    style G fill:#ff9,stroke:#333
-    style H fill:#ff9,stroke:#333
     
 ---
 
