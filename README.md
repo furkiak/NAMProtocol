@@ -117,9 +117,9 @@ Protokol, güvenliği katmanlandırmak adına çoklu anahtar mimarisini kullanı
 ### 🧂 Anahtar-2: SALT (High Entropy Injection)
 * **Amaç:** Frekans ve veri analizlerini imkânsız hâle getirmek.
 * **Yöntem:** Yüksek entropili bir bit bloğu üretilir. Orijinal bit dizisine rastgele bir konumdan enjekte edilir:
-    * Sol başa
-    * Sağ başa
-    * Veya belirli bir ofset sonrasına
+    * Sol baştan toplama
+    * Sağ başa toplama
+    * Veya belirli bir ofset sonrasına toplama
 * **Sonuç:** Enjeksiyon konumu bilinmediği sürece analitik geri mühendislik engellenir.
 
 ### 📉 Anahtar-3: OFFSET PATTERN LIST
