@@ -1,7 +1,7 @@
-# D.A.H.A. / N.A.M. Protokolü
-**Doğal Aritmetik Haritalama Algoritması — Natural Arithmetic Mapping** 
+# N.A.M. / D.A.H.A. Protokolü
+**Natural Arithmetic Mapping - Doğal Aritmetik Haritalama Algoritması** 
 
-**Kategori:** MRM — Mathematical Reversible Mapping
+**Category / Kategori:** MRM — Mathematical Reversible Mapping
 
 **Version:** 0.0.1 (Concept / Experimental)  
 
@@ -131,7 +131,8 @@ Sabit `+5` / `–5` işlemleri yerine; anahtar tabanlı, döngüsüz ve tahmin e
 Toplam adım sayısı (Derinlik) gizlenir.
 
 **Formül:**
-MaskedDepth = RealDepth \oplus DepthKey
+MaskedDepth = RealDepth XOR DepthKey
+
 Ayrıca:
 * Dummy (geçersiz) adımlar
 * Gürültü derinliği
@@ -226,34 +227,16 @@ Aşağıdaki tablo, **D.A.H.A.**’nın matematiksel yaklaşımını klasik krip
 
 ---
 
-### 🚀 D.A.H.A.’nın Avantajlı Olduğu Teorik Alanlar
+## 🏛️ 11. Teorik Kullanım Senaryosu: "Shamir's Secret Sharing" Alternatifi
 
-#### ✔ 1. BigInt tabanlı matematiksel yok etme
-* **Diğer algoritmalar:** Veriyi şifreler.
-* **D.A.H.A.:** Veriyi 0’a indirip yeniden oluşturur.
+Bu senaryoda, D.A.H.A. protokolü; gizli tesis koordinatları ve nükleer fırlatma kodları gibi **"Top Secret"** sınıfındaki verilerin korunması amacıyla kullanılır.
 
-#### ✔ 2. Çoklu anahtar modeli
-* **AES:** Tek anahtar.
-* **RSA/ECC:** Tek private key.
-* **D.A.H.A.:** `HEADER` + `SALT` + `OFFSET` + `DEPTH` + `HASH`.
+1.  **Veri Yok Etme:** Kritik veriyi içeren dijital varlık, D.A.H.A. protokolü ile işlenerek tamamen yok edilir (secure deletion). Geriye sadece matematiksel geri dönüşüm parametreleri (`MAP`, `DEPTH`, `SALT`, vb.) kalır.
+2.  **Air-Gapped (İzole) Dağıtım:** Oluşturulan anahtar bileşenleri (`MAP` ve `Key Set`), dijital ortamdan tamamen çıkarılır.
+3.  **Fiziksel Parçalama (Fragmentation):** Kritik anahtarlar parçalara bölünerek, üst düzey devlet görevlilerine **fiziksel "Hard Copy" (A4/Kart)** formatında teslim edilir.
+4.  **Rekonstrüksiyon (Yeniden İnşa):**
+    * Sistem, tek bir parça ile asla çalışmaz.
+    * Verinin kurtarılması için tüm yetkililerin (veya belirlenen çoğunluğun) fiziksel olarak bir araya gelmesi ve anahtar parçalarını sisteme girmesi gerekir.
 
-#### ✔ 3. Format analizini engeller
-* **AES:** Şifrelenmiş çıktı analiz edilebilir.
-* **D.A.H.A.:** `header mask` + `salt` ile şunlar çıkarılamaz:
-  * Dosya tipi
-  * Boyut
-  * İçerik paterni
+✅ **Sonuç:** Bu yöntemle **siber saldırı yüzeyi %0'a indirilir**. Veri dijital dünyada "mevcut olmadığı" için çalınamaz, parçalar ise tek başlarına anlamsızdır.
 
-#### ✔ 4. Oracle saldırılarına direnç
-* Her adımın ofset işlemi kurala bağlı değildir → **key pattern** tabanlıdır.
-
-### ⚠️ D.A.H.A.’nın Sınırlı Olduğu Teorik Alanlar
-
-#### ❗ 1. Matematiksel maliyet (çok büyük BigInt işlemleri)
-* **AES:** Hardware’de çok hızlıdır.
-* **D.A.H.A.:** Devasa `BigInt` üzerinde çalışır → **CPU yoğun**.
-
-#### ❗ 2. Standartlaşmamış yapı
-* **AES/NIST:** Standart.
-* **RSA/ECC:** Dünya standardı.
-* **D.A.H.A.:** Yeni bir kategori, uzun test süreçleri gerekir.
