@@ -1,15 +1,19 @@
 # D.A.H.A. / N.A.M. Protokolü
 **Doğal Aritmetik Haritalama Algoritması — Natural Arithmetic Mapping** 
+
 **Kategori:** MRM — Mathematical Reversible Mapping
+
 **Version:** 0.0.1 (Concept / Experimental)  
 
 ## 👨‍💻 Author / Yazar
 **Furkan AKÇA** *Creator & Lead Researcher* Project Started: December 2025
+
 **Collaborator:** Gemini AI (Concept Validation & Documentation)
 
 ## 📄 License
 This project is licensed under the MIT License.
 Copyright (c) 2025 Furkan AKÇA.
+
 **Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
 
 ---
