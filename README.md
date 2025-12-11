@@ -1,5 +1,5 @@
 # D.A.H.A. / N.A.M. Protokolü
-**Doğal Aritmetik Haritalama Algoritması — Natural Arithmetic Mapping** > 
+**Doğal Aritmetik Haritalama Algoritması — Natural Arithmetic Mapping** 
 **Kategori:** MRM — Mathematical Reversible Mapping
 **Version:** 0.0.1 (Concept / Experimental)  
 
