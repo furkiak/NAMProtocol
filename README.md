@@ -1,146 +1,254 @@
-# N.A.M. Protocol (Natural Arithmetic Mapping)
-### (D.A.H.A. Protokolü - Doğal Aritmetik Haritalama Algoritması)
-
-**Version:** 1.0.0 (Concept / Experimental)  
+# D.A.H.A. / N.A.M. Protokolü
+**Doğal Aritmetik Haritalama Algoritması — Natural Arithmetic Mapping** > **Kategori:** MRM — Mathematical Reversible Mapping
+**Version:** 0.0.1 (Concept / Experimental)  
 
 ## 👨‍💻 Author / Yazar
-
 **Furkan AKÇA** *Creator & Lead Researcher* Project Started: December 2025
-
 **Collaborator:** Gemini AI (Concept Validation & Documentation)
 
 ## 📄 License
-
 This project is licensed under the MIT License.
 Copyright (c) 2025 Furkan AKÇA.
-
 **Disclaimer / Sorumluluk Reddi:** This protocol is experimental. Use at your own risk for critical data. / Bu protokol deneyseldir. Kritik verilerinizde kullanırken dikkatli olun.
-    
----
-
-## 🌍 [English] N.A.M. Protocol Whitepaper
-
-### 📋 Abstract
-The **N.A.M. Protocol (Natural Arithmetic Mapping)** is a next-generation "Split-Key" encryption and obfuscation architecture designed for extreme data security. Unlike standard encryption methods (AES, RSA) that treat data as blocks of bits, N.A.M. treats the entire data stream as a single, massive **Natural Number**.
-
-By separating the file's format signature (Header), statistical structure (Salt), and magnitude (Depth), the protocol renders the encrypted data (Map) mathematically meaningless and unsolvable without all three keys. The goal is not compression, but absolute privacy through arithmetic transformation.
-
-### 1. Philosophy: Oracle-less Encryption
-Traditional encryption often leaves traces (file headers, patterns) that allow attackers to verify if a brute-force attempt was successful (Oracle).
-
-**N.A.M. operates on this premise:**
-*"If the format (Header), the starting point (Salt), and the magnitude (Depth) of data are unknown, the map leading to that data is mathematically useless."*
-
-### 2. System Architecture: The Trinity Keys
-The security relies on three independent parameters. The stored `MAP` file on the disk is just noise without these keys.
-
-#### 🔑 Key 1: HEADER (Format Signature)
-* **Function:** The file header (e.g., `ftyp` for MP4, `%PDF` for PDF) is stripped before processing.
-* **Security:** Without this key, even if the data is decrypted, the operating system cannot recognize or open the file. It eliminates the "success verification" for attackers.
-
-#### 🧂 Key 2: SALT (Entropy Injection)
-* **Function:** A high-entropy random number added to the beginning of the headless body.
-* **Security:** It destroys the statistical frequency of the file. The same file produces a completely different Map with a different Salt (Avalanche Effect).
-
-#### 📏 Key 3: DEPTH (Step Count)
-* **Function:** The exact number of arithmetic steps performed.
-* **Security:** It determines the bit-alignment. A single digit error in Depth results in a complete bit-shift error, corrupting the entire dataset.
-
-### 3. The Algorithm
-
-#### 3.1. Encryption
-1.  **Stripping:** Remove the `Header` (Save as Key-1).
-2.  **Salting:** Prepend `Salt` to the remaining body (Save as Key-2).
-3.  **Conversion:** Treat the data chunk ($Salt + Body$) as a massive Natural Number ($N$).
-4.  **Mapping Loop:**
-    * Divide $N$ by 2.
-    * If $N$ is Odd (decimal ends in 5): Record the step index to `MAP` and subtract 5 (or apply algorithmic equivalent).
-    * Repeat until $N$ becomes 0.
-5.  **Output:** Save the total step count as **Key-3 (Depth)** and the list of indices as the `MAP` file.
-
-#### 3.2. Decryption
-1.  **Initialization:** Start with number $0$ and the `MAP` list.
-2.  **Reconstruction:**
-    * Loop backwards from **Key-3 (Depth)** down to 1.
-    * Operation: $N = N \times 2$ (Left Bit Shift).
-    * If the current step index exists in `MAP`: $N = N + 5$.
-3.  **Finalization:**
-    * Subtract/Remove **Key-2 (Salt)**.
-    * Prepend **Key-1 (Header)**.
-    * **Result:** Original file is restored.
-
-### 4. Security & Trade-offs
-* **Impossibility of Brute-Force:** An attacker must guess the Header, the Salt, and the exact Depth simultaneously. Since the file has no header, there is no way to verify if a guess is correct.
-* **Data Expansion:** By utilizing Delta Encoding (storing the relative distance between bits instead of absolute addresses), the storage overhead is significantly optimized. The estimated file size expansion is reduced to 1.5x - 4x.
-* **Performance:** Requires BigInt arithmetic, making it slower than hardware-accelerated AES.
-
-### 5. Use Cases
-* **Cold Storage:** Securing archives where size is irrelevant, but security is paramount.
-* **Deep Obfuscation:** Hiding critical text or keys within massive numeric maps.
-* **State-Level Secrecy:** Scenarios requiring physically separated keys.
 
 ---
----
 
-## 🇹🇷 [Türkçe] D.A.H.A. Protokolü Whitepaper
+## 📌 1. Protokol Hakkında
 
-### 📋 Özet
-**D.A.H.A. Protokolü (Doğal Aritmetik Haritalama Algoritması)**, yüksek veri güvenliği için tasarlanmış, **"Parçalı Anahtar" (Split-Key)** mimarisine dayanan yeni nesil bir şifreleme ve gizleme protokolüdür. Veriyi bloklar halinde işleyen standart yöntemlerin (AES, RSA) aksine, D.A.H.A. verinin tamamını tek ve devasa bir **Doğal Sayı** olarak kabul eder.
+**D.A.H.A. Protokolü** (Doğal Aritmetik Haritalama Algoritması); dosyaları şifrelemek, gizlemek, kimliksizleştirmek ve matematiksel olarak yok edilebilir hâle getirmek için geliştirilmiş yeni nesil bir veri dönüşüm sistemidir.
 
-Dosyanın format imzasını (Header), istatistiksel yapısını (Salt) ve büyüklüğünü (Depth) birbirinden ayırarak, şifreli veriyi (Map) bu üç anahtar olmadan matematiksel olarak çözülemez hale getirir. Amaç sıkıştırma değil, aritmetik dönüşüm yoluyla mutlak gizliliktir.
+Klasik kriptografideki blok/bayt odaklı mimarilerin aksine **D.A.H.A.**, tüm dosyayı:
+1.  **Tek ve devasa bir doğal sayı** olarak işler.
+2.  Dosya bu işlem sonucunda iki bileşene ayrılır:
+    * **MAP:** Matematiksel Ofset Adım Dizisi
+    * **DEPTH:** Uygulanan toplam adım sayısı (maskeleme uygulanmış)
 
-### 1. Felsefe: Doğrulayıcısız (Oracle-less) Şifreleme
-Geleneksel şifreleme, saldırganların deneme-yanılma yaparken başarılı olup olmadıklarını anlamalarına yarayan izler (dosya başlıkları vb.) bırakabilir.
-
-**D.A.H.A. şu varsayımla çalışır:**
-*"Bir verinin formatı (Header), başlangıç noktası (Salt) ve derinliği (Depth) bilinmiyorsa; o veriye giden yol haritası matematiksel olarak hiçbir anlam ifade etmez."*
-
-### 2. Sistem Mimarisi: 3-Anahtarlı Yapı
-Sistem güvenliği birbirinden bağımsız 3 parametreye dayanır. Diskteki `MAP` dosyası, bu anahtarlar olmadan sadece gürültüdür.
-
-#### 🔑 Anahtar 1: HEADER (Format İmzası)
-* **İşlevi:** Dosya başlığı (Örn: MP4 için `ftyp`, PDF için `%PDF`) işlemden önce kesilir.
-* **Güvenlik:** Bu anahtar olmadan, veri çözülse bile işletim sistemi dosyayı tanıyamaz ve açamaz. Saldırgan için "başarı doğrulamasını" yok eder.
-
-#### 🧂 Anahtar 2: SALT (Tuzlama)
-* **İşlevi:** Başlıksız gövdenin en başına eklenen yüksek entropili rastgele sayıdır.
-* **Güvenlik:** Dosyanın istatistiksel frekansını bozar. Aynı dosya, farklı Salt ile tamamen farklı bir Harita üretir.
-
-#### 📏 Anahtar 3: DEPTH (Basamak/Adım Sayısı)
-* **İşlevi:** Yapılan aritmetik işlemin toplam adım sayısıdır.
-* **Güvenlik:** Bit hizalamasını belirler. Depth değerindeki tek bir rakam hatası, tüm veride bit kayması (bit-shift) hatasına neden olur ve veriyi bozar.
-
-### 3. Algoritma
-
-#### 3.1. Şifreleme
-1.  **Ayrıştırma:** Dosyanın `Header` kısmı kesilir ve **Anahtar-1** olarak saklanır.
-2.  **Tuzlama:** Kalan gövdenin başına `Salt` eklenir ve **Anahtar-2** olarak saklanır.
-3.  **Dönüşüm:** Veri yığını ($Salt + Body$) devasa bir Doğal Sayı ($N$) olarak işlenir.
-4.  **Haritalama Döngüsü:**
-    * $N$ sayısı 2'ye bölünür.
-    * Sayı Tek ise (Onluk tabanda sonu 5): Adım sırası `MAP` listesine kaydedilir ve 5 çıkarılır.
-    * Sayı 0 olana kadar devam eder.
-5.  **Çıktı:** Toplam adım sayısı **Anahtar-3 (Depth)** ve oluşan liste `MAP` dosyası olarak kaydedilir.
-
-#### 3.2. Deşifreleme
-1.  **Başlangıç:** $0$ sayısı ve `MAP` listesi ile başlanır.
-2.  **Geri Sarma:**
-    * **Anahtar-3 (Depth)** sayısından geriye doğru döngü kurulur.
-    * İşlem: $N = N \times 2$ (Sola Bit Kaydırma).
-    * Eğer o anki adım `MAP` listesinde varsa: $N = N + 5$.
-3.  **Sonlandırma:**
-    * Oluşan sayıdan **Anahtar-2 (Salt)** çıkarılır.
-    * Başına **Anahtar-1 (Header)** eklenir.
-    * **Sonuç:** Orijinal dosya geri yüklenir.
-
-### 4. Güvenlik ve Kısıtlar
-* **Brute-Force İmkansızlığı:** Saldırgan Header, Salt ve Depth değerlerini aynı anda doğru tahmin etmek zorundadır. Header olmadığı için tahminin doğruluğunu test edemez.
-* **Veri Genişlemesi:** `MAP` dosyası mutlak adresler yerine bitler arasındaki mesafeyi (Fark/Delta) tutarak optimize edilmiştir. Tahmini dosya boyutu artışı 1.5x - 4x seviyesine indirilmiştir.
-* **Performans:** Büyük sayı (BigInt) aritmetiği gerektirdiği için donanım tabanlı şifrelemelerden daha yavaştır.
-
-### 5. Kullanım Alanları
-* **Cold Storage (Soğuk Depolama):** Boyutun önemsiz olduğu ama güvenliğin kritik olduğu arşivler.
-* **Derin Gizleme (Obfuscation):** Kritik metin veya anahtarların devasa sayısal haritalar içinde saklanması.
-* **Devlet Düzeyinde Gizlilik:** Anahtarların fiziksel olarak ayrı yerlerde tutulması gereken senaryolar.
+> ⚠️ **Not:** MAP + DEPTH olmadan orijinal dosyaya erişmek matematiksel olarak imkânsızdır.
 
 ---
+
+## 📌 2. Matematiksel Çalışma Prensibi
+
+Algoritmanın temel çalışma akışı şu şekildedir:
+
+1.  Dosyanın ham bit karşılığı alınır.
+2.  Bit dizisi tek bir büyük doğal sayı (**BigInt**) gibi ele alınır.
+3.  Eğer doğal sayı **tek** ise sonuna "0" eklenerek **çift** yapılır.
+4.  Süreç başlar:
+    * **Çift ise:** 2’ye böl.
+    * **Tek ise:**
+        * Dinamik OFFSET pattern’e göre `+5` veya `–5` uygula.
+        * Ardından 2’ye böl.
+        * Bu adım **MAP**’e eklenir.
+5.  Sayı `0` olana kadar devam eder.
+6.  Tüm adımların toplamı → **RealDepth**
+
+Sonuç olarak; **MAP + MaskedDepth + OFFSET** dizisi ile süreç ters yönlü çalıştırılarak orijinal dosya matematiksel olarak yeniden elde edilir.
+
+---
+
+## 🔍 Örnek Çalışma
+
+Basit örnek (sabit +5/–5) üzerinden işleyiş:
+
+* **Girdi (Bit Dizisi):** `1010`
+* **Hazırlık:** Sonu `0` → direkt işlemler başlar.
+
+| Adım | İşlem | Durum | MAP Kaydı |
+| :---: | :--- | :--- | :--- |
+| **1** | $1010 / 2 = 505$ | Tek | - |
+| **2** | $505 \to \pm5 \to 250$ | Çift (İşlem sonrası) | **MAP: 2** |
+| **3** | $250 / 2 = 125$ | Tek | - |
+| **4** | $125 \to \pm5 \to 60$ | Çift (İşlem sonrası) | **MAP: 2, 4** |
+| **5** | $60 / 2 = 30$ | Çift | - |
+| **6** | $30 / 2 = 15$ | Tek | - |
+| **7** | $15 \to \pm5 \to 5$ | Çift (İşlem sonrası) | **MAP: 2, 4, 7** |
+| **8** | $5 \to \pm5 \to 0$ | Bitiş | **MAP: 2, 4, 7, 8** |
+
+**Sonuç Çıktısı:**
+* **DEPTH:** 8
+* **MAP:** `[2, 4, 7, 8]`
+
+> *MAP + DEPTH → ters çalıştırıldığında bit dizisi eksiksiz geri elde edilir.*
+
+## 🛡️ 3. Güvenlik ve Optimizasyon Katmanları
+
+Sistem, verimliliği artırmak ve veri bütünlüğünü korumak adına üç aşamalı bir katman mimarisi kullanır.
+
+### 🔹 Optimizasyon-1: MAP Delta Compression
+MAP dizisi, dosya boyutu büyüdükçe çok büyük sayı indeksleri içerebilir. Bu veriyi ham haliyle saklamak yerine **Delta (Fark)** yöntemi uygulanır:
+* Sıra numaraları yerine, bir önceki sayı ile olan **farklar (delta)** saklanır.
+* Bu sayede MAP boyutu ciddi düzeyde azaltılır.
+* Daha küçük sayılarla çalışıldığı için sıkıştırma algoritmalarının verimliliği artar.
+
+### 🔹 Optimizasyon-2: MAP Compression
+Delta dönüşümü sonrası elde edilen MAP dizisi, matematiksel olarak yüksek oranda tekrarlı veya tahmin edilebilir bir yapıya bürünür. Bu dizi aşağıdaki yöntemlerle orijinal dosyadan çok daha küçük boyutlara indirilir:
+* `Gzip`
+* `Brotli`
+* `Arithmetic Coding`
+* *Veya özel geliştirilmiş compressor algoritmaları.*
+
+### 🔐 Optimizasyon-3: Integrity Hash (Bütünlük Kontrolü)
+İşlem tamamlandığında, tüm veri yapısının (**HEADER + BODY**) kriptografik özeti alınır.
+* **Algoritmalar:** `SHA-256` veya `SHA3-512` kullanılır.
+
+**Geri dönüş işleminde Hash uyuşmazlığı yaşanırsa, bu durum şu hatalardan birine işaret eder:**
+1.  Yanlış **Salt** kullanımı.
+2.  Bozuk veya değiştirilmiş **MAP** verisi.
+3.  Hatalı **Depth Maskesi**.
+4.  Yanlış **Offset Listesi**.
+5.  Eksik veya bozuk **Header** bilgisi.
+
+## 🔑 4. Anahtar Setleri (MRK — Mathematical Reversible Keys)
+
+Protokol, güvenliği katmanlandırmak adına çoklu anahtar mimarisini kullanır.
+
+### 🗝️ Anahtar-1: HEADER MASK
+* **Amaç:** Dosya formatı tespitini (Magic Bytes detection) engellemek.
+* **Yöntem:** Dosyanın ilk byte’ları (magic header) ana gövdeden ayrılır.
+* Bu parça **Şifre-1** olarak saklanır.
+* ⚠️ *Geri dönüş işlemi için zorunludur.*
+
+### 🧂 Anahtar-2: SALT (High Entropy Injection)
+* **Amaç:** Frekans ve veri analizlerini imkânsız hâle getirmek.
+* **Yöntem:** Yüksek entropili bir bit bloğu üretilir. Orijinal bit dizisine rastgele bir konumdan enjekte edilir:
+    * Sol başa
+    * Sağ başa
+    * Veya belirli bir ofset sonrasına
+* **Sonuç:** Enjeksiyon konumu bilinmediği sürece analitik geri mühendislik engellenir.
+
+### 📉 Anahtar-3: OFFSET PATTERN LIST
+Sabit `+5` / `–5` işlemleri yerine; anahtar tabanlı, döngüsüz ve tahmin edilemez diziler kullanılır.
+
+Örnek Pattern:
+[+5, +5, -5, -5, +5, -5, ...]
+### 🎭 Anahtar-4: DEPTH Mask
+Toplam adım sayısı (Derinlik) gizlenir.
+
+**Formül:**
+MaskedDepth = RealDepth \oplus DepthKey
+Ayrıca:
+* Dummy (geçersiz) adımlar
+* Gürültü derinliği
+
+eklenebilir.
+
+---
+
+## 📌 5. Kriptografik Konumlandırma
+
+**D.A.H.A.**, hiçbir mevcut kategoriye tam olarak oturmadığı için yeni bir sınıf tanımlar:
+
+### 🛡️ MRM — Mathematical Reversible Mapping
+
+Bu sınıf:
+* Şifreleme
+* Gizleme
+* Format kaldırma
+* Kimliksizleştirme
+* Veri yok etme (geri çağırmalı)
+* BigInt matematiği
+* Çoklu anahtar modeli
+* Oracle saldırılarına kapalı yapı
+
+gibi özellikleri birlikte sunar.
+
+---
+
+## 📌 6. Kullanım Alanları
+
+* 🏛️ Devlet sırrı arşivleme
+* 🔐 Yüksek güvenlikli anahtar depolama
+* ♻️ Veri yok etme (geri getirilebilir)
+* 🛡️ Bilgi savaşı / siber savunma
+* ❄️ Cold storage data encryption
+* 💾 Donanım tabanlı güvenlik modülleri
+* 🔑 Key escrow sistemleri
+
+## 📊 7. Özellik Tablosu
+
+| Özellik | Durum | Açıklama |
+| :--- | :---: | :--- |
+| Geri dönüşümlü matematiksel dönüşüm | ✔️ | Kayıpsız |
+| Çoklu anahtar seti | ✔️ | `HEADER` + `SALT` + `OFFSET` + `DEPTH` |
+| Format gizleme | ✔️ | `HEADER MASK` |
+| Veri analizi engelleme | ✔️ | `SALT` + `OFFSET` |
+| MAP sıkıştırma | ✔️ | Delta + Compression |
+| Bütünlük kontrolü | ✔️ | `SHA-256` / `SHA3-512` |
+| Oracle saldırı koruması | ✔️ | Sabit ofset yok |
+| Donanımsal uygulama | ✔️ | FPGA/ASIC’e uygun |
+
+---
+
+## 🐍 9. Basit Python Demo (Örnek Dosya → MAP → Geri Yükleme)
+
+Aşağıdaki örnekte:
+
+1. "Yeni nesil Şifreleme ve Yok etme algoritması" içeriğine sahip örnek bir metin dosyası oluşturulur.
+2. Dosyadan ham bit karşılığı alınır.
+3. Hiçbir güvenlik katmanı uygulanmadan `MAP` ve `DEPTH` hesaplanır.
+4. `MAP` + `DEPTH` kullanılarak dosya yeniden oluşturulur.
+
+> ⚠️ **Not:** Bu demo yalnızca matematik çekirdeğini göstermek içindir.
+>
+> Gerçek protokol; `OFFSET LIST`, `HEADER MASK`, `SALT`, `DEPTH MASK`, `HASH`, `DELTA COMPRESSION` vb. içerir.
+
+➡️ `Test.py` dosyasını kullanabilirsiniz.
+
+---
+
+## ⚖️ 10. Teorik Karşılaştırma
+
+### D.A.H.A. vs. Diğer Şifreleme Yöntemleri
+
+Aşağıdaki tablo, **D.A.H.A.**’nın matematiksel yaklaşımını klasik kriptografiye göre konumlandırır.
+
+#### 📊 D.A.H.A. vs AES / RSA / ECC — Kavramsal Farklar
+
+| Özellik / Sistem | AES | RSA | ECC | D.A.H.A. |
+| :--- | :--- | :--- | :--- | :--- |
+| **Temel Yapı** | Blok şifreleme | Büyük asal matematiği | Eliptik eğri matematiği | Doğal sayı haritalama / BigInt yönlü ters dönüşüm |
+| **İşlem Prensibi** | `SubBytes`, `ShiftRows`, `MixColumns` | Modüler üs alma | Eliptik eğri noktaları | 2’ye bölme + ofset uygulama |
+| **Veri Boyutu Yaklaşımı** | Blok (128 bit) | Rastgele boyut | Rastgele boyut | Tüm dosya = tek büyük sayı |
+| **Format Gizleme** | ❌ | ❌ | ❌ | ✔ `HEADER MASK` |
+| **Salt/Noise** | ✔ Var | ✔ Var | ✔ Var | ✔ + rastgele konumlu `SALT` |
+| **Geri Dönüş** | Anahtar olmadan mümkün değil | Anahtar olmadan mümkün değil | Anahtar olmadan mümkün değil | Anahtar + `MAP` olmadan matematiksel geri dönüş imkânsız |
+| **Oracle Engelleme** | Kısmen | Kısmen | Kısmen | ✔ Tamamen (dinamik offset + dummy steps) |
+| **Dosya Yok Etme** | Var | Var | Var | ✔ Matematiksel sıfırlama |
+| **Format Kaldırma** | ❌ | ❌ | ❌ | ✔ Dosya → kimliksiz doğal sayı |
+| **Şifre-Metin Analizi** | Zayıflık doğabilir | Beklenir | Zor | `SALT` + `OFFSET` + `DELTA` → analiz yapılamaz |
+| **Sıkıştırma Uygunluğu** | Veri bağımlı | Veri bağımlı | Veri bağımlı | `MAP` delta + compressor ile yüksek |
+
+---
+
+### 🚀 D.A.H.A.’nın Avantajlı Olduğu Teorik Alanlar
+
+#### ✔ 1. BigInt tabanlı matematiksel yok etme
+* **Diğer algoritmalar:** Veriyi şifreler.
+* **D.A.H.A.:** Veriyi 0’a indirip yeniden oluşturur.
+
+#### ✔ 2. Çoklu anahtar modeli
+* **AES:** Tek anahtar.
+* **RSA/ECC:** Tek private key.
+* **D.A.H.A.:** `HEADER` + `SALT` + `OFFSET` + `DEPTH` + `HASH`.
+
+#### ✔ 3. Format analizini engeller
+* **AES:** Şifrelenmiş çıktı analiz edilebilir.
+* **D.A.H.A.:** `header mask` + `salt` ile şunlar çıkarılamaz:
+  * Dosya tipi
+  * Boyut
+  * İçerik paterni
+
+#### ✔ 4. Oracle saldırılarına direnç
+* Her adımın ofset işlemi kurala bağlı değildir → **key pattern** tabanlıdır.
+
+### ⚠️ D.A.H.A.’nın Sınırlı Olduğu Teorik Alanlar
+
+#### ❗ 1. Matematiksel maliyet (çok büyük BigInt işlemleri)
+* **AES:** Hardware’de çok hızlıdır.
+* **D.A.H.A.:** Devasa `BigInt` üzerinde çalışır → **CPU yoğun**.
+
+#### ❗ 2. Standartlaşmamış yapı
+* **AES/NIST:** Standart.
+* **RSA/ECC:** Dünya standardı.
+* **D.A.H.A.:** Yeni bir kategori, uzun test süreçleri gerekir.
